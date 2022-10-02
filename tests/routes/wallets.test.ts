@@ -10,24 +10,11 @@ const walletTest = {
     enabled: true
 }
 
-process.env.TOKEN_KEY = 'test';
-process.env.ACCESS_TOKEN_LIFE_TIME = "3600"
-process.env.REFRESH_TOKEN_LIFE_TIME = "864000"
-const login = { email: 'teste@login.com', password: '123456' };
-let token: string;
 let id: string;
-beforeAll(async () => {
-    await request(appCore).post('/auth/register').send(login);
-    const res = await request(appCore).post('/auth/login').send(login);
-    token = res.body.access;
-});
-afterAll(async () => {
-    await request(appCore).delete(`/auth/user/${login.email}`).set('Authorization', `Bearer ${token}`);
-});
 
 describe('POST /wallets', () => {
     it('should return a created app', async () => {
-        const res = await request(app).post('/wallets').send(walletTest).set('Authorization', `Bearer ${token}`);
+        const res = await request(app).post('/wallets').send(walletTest);
         expect(res.status).toBe(201);
         expect(res.body.name).toEqual(walletTest.name);
         expect(res.body.type).toEqual(walletTest.type);
@@ -40,7 +27,7 @@ describe('POST /wallets', () => {
 
 describe('GET /wallets', () => {
     it('should return a list of wallets', async () => {
-        const res = await request(app).get('/wallets').set('Authorization', `Bearer ${token}`);
+        const res = await request(app).get('/wallets');
         expect(res.status).toBe(200);
         expect(res.body.length).toBeGreaterThan(0);
     });
@@ -48,7 +35,7 @@ describe('GET /wallets', () => {
 
 describe('GET /wallets/:id', () => {
     it('should return a wallet', async () => {
-        const res = await request(app).get(`/wallets/${id}`).set('Authorization', `Bearer ${token}`);
+        const res = await request(app).get(`/wallets/${id}`);
         expect(res.status).toBe(200);
         expect(res.body.name).toEqual(walletTest.name);
         expect(res.body.type).toEqual(walletTest.type);
@@ -62,7 +49,7 @@ describe('PUT /wallets/:id', () => {
     it('should return a updated wallet', async () => {
         walletTest.name = 'Test Wallet Updated';
         walletTest.user = 'other@login.com';
-        const res = await request(app).put(`/wallets/${id}`).send(walletTest).set('Authorization', `Bearer ${token}`);
+        const res = await request(app).put(`/wallets/${id}`).send(walletTest);
         expect(res.status).toBe(200);
         expect(res.body.name).toEqual(walletTest.name);
         expect(res.body.type).toEqual(walletTest.type);
@@ -74,7 +61,7 @@ describe('PUT /wallets/:id', () => {
 
 describe('DELETE /wallets/:id', () => {
     it('should return a deleted wallet', async () => {
-        const res = await request(app).delete(`/wallets/${id}`).set('Authorization', `Bearer ${token}`);
+        const res = await request(app).delete(`/wallets/${id}`);
         expect(res.status).toBe(200);
     });
 });
