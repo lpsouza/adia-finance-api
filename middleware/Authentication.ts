@@ -2,6 +2,10 @@ import * as express from 'express';
 import CoreService from '../services/CoreService';
 
 export const Authentication = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (['development', 'test'].includes(process.env.NODE_ENV)) {
+        next()
+        return;
+    }
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
         const appId = req.headers['X-App-Id'] as string;
