@@ -36,13 +36,13 @@ router.post('/', async (req: express.Request, res: express.Response) => {
 router.put('/:id', async (req: express.Request, res: express.Response) => {
     const wallet = await Wallet.findOne({ _id: req.params.id });
     if (wallet) {
-        wallet.name = req.body.name;
-        wallet.type = req.body.type;
-        wallet.user = req.body.user;
-        wallet.balance = req.body.balance;
-        wallet.balanceDate = req.body.dateBalance;
-        wallet.bankId = req.body.bankId;
-        wallet.enabled = req.body.enabled;
+        wallet.name = !req.body.name ? wallet.name : req.body.name;
+        wallet.type = !req.body.type ? wallet.type : req.body.type;
+        wallet.user = !req.body.user ? wallet.user : req.body.user;
+        wallet.balance = !req.body.balance ? wallet.balance : req.body.balance;
+        wallet.balanceDate = !req.body.dateBalance ? wallet.balanceDate : req.body.dateBalance;
+        wallet.bankId = !req.body.bankId ? wallet.bankId : req.body.bankId;
+        wallet.enabled = !req.body.enabled ? wallet.enabled : req.body.enabled;
         const updated = await wallet.save();
         if (updated) {
             res.status(200).json(updated);
