@@ -1,4 +1,4 @@
-import * as request from 'supertest';
+import request from 'supertest';
 import app from '../../app';
 import appCore from '../core/../../app';
 
@@ -42,6 +42,10 @@ describe('GET /wallets/:id', () => {
         expect(res.body.user).toEqual(walletTest.user);
         expect(res.body.bankId).toEqual(walletTest.bankId);
         expect(res.body.enabled).toEqual(walletTest.enabled);
+    });
+    it('should return wallet not found', async () => {
+        const res = await request(app).get(`/wallets/aaa`);
+        expect(res.status).toBe(404);
     });
 });
 

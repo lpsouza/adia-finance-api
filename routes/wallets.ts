@@ -3,24 +3,47 @@ const router = express.Router();
 
 import { Wallet } from '../database/models/Wallet';
 
+/**
+ * GET /wallets
+ * @summary Get all wallets
+ * @tags wallet
+ * @return {array<Wallet>} 200 - success response - application/json
+ */
 router.get('/', async (req: express.Request, res: express.Response, next: Function) => {
-    const wallets = await Wallet.find();
-    if (wallets) {
+    try {
+        const wallets = await Wallet.find();
         res.status(200).json(wallets);
-    } else {
-        res.status(404).send('No wallets found');
+    } catch (error) {
+        res.status(500).send('Internal Server Error');
     }
 });
 
+/**
+ * GET /wallets/{id}
+ * @summary Get a wallet
+ * @tags wallet
+ * @param {string} id.path
+ * @return {Wallet} 200 - success response - application/json
+ * @return {string} 404 - error response - string
+ */
 router.get('/:id', async (req: express.Request, res: express.Response) => {
-    const wallet = await Wallet.findOne({ _id: req.params.id });
-    if (wallet) {
+    try {
+        const wallet = await Wallet.findOne({ _id: req.params.id });
         res.status(200).json(wallet);
-    } else {
+    } catch (error) {
         res.status(404).send('No wallet found');
+
     }
 });
 
+/**
+ * POST /wallets
+ * @summary Create a new wallet
+ * @tags wallet
+ * @param {Wallet} request.body.required - Wallet object - application/json
+ * @return {Wallet} 200 - success response - application/json
+ * @return {string} 404 - error response - string
+ */
 router.post('/', async (req: express.Request, res: express.Response) => {
     const wallet = new Wallet(req.body);
     wallet.balance = !wallet.balance ? 0 : wallet.balance;
@@ -33,9 +56,18 @@ router.post('/', async (req: express.Request, res: express.Response) => {
     }
 });
 
+/**
+ * PUT /wallets/{id}
+ * @summary Edit a wallet
+ * @tags wallet
+ * @param {string} id.path
+ * @param {Wallet} request.body.required - Wallet object - application/json
+ * @return {Wallet} 200 - success response - application/json
+ * @return {string} 404 - error response - string
+ */
 router.put('/:id', async (req: express.Request, res: express.Response) => {
-    const wallet = await Wallet.findOne({ _id: req.params.id });
-    if (wallet) {
+    try {
+        const wallet = await Wallet.findOne({ _id: req.params.id });
         wallet.name = !req.body.name ? wallet.name : req.body.name;
         wallet.type = !req.body.type ? wallet.type : req.body.type;
         wallet.user = !req.body.user ? wallet.user : req.body.user;
@@ -49,16 +81,24 @@ router.put('/:id', async (req: express.Request, res: express.Response) => {
         } else {
             res.status(400).send('No wallet updated');
         }
-    } else {
+    } catch (error) {
         res.status(404).send('No wallet found');
     }
 });
 
+/**
+ * DELETE /wallets/{id}
+ * @summary Get a wallet
+ * @tags wallet
+ * @param {string} id.path
+ * @return {Wallet} 200 - success response - application/json
+ * @return {string} 404 - error response - string
+ */
 router.delete('/:id', async (req: express.Request, res: express.Response) => {
-    const wallet = await Wallet.findOneAndDelete({ _id: req.params.id });
-    if (wallet) {
+    try {
+        await Wallet.findOneAndDelete({ _id: req.params.id });
         res.status(200).send('Wallet deleted');
-    } else {
+    } catch (error) {
         res.status(404).send('No wallet found');
     }
 });
