@@ -15,13 +15,28 @@ router.post('/importer', (req: express.Request, res: express.Response, next: Fun
     }
 
     banking.parse(ofxFile.data.toString('utf8'), async (ofx: any) => {
-        const transactions: any[] = ofx.body.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.BANKTRANLIST.STMTTRN
-        const balance = ofx.body.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.LEDGERBAL
-
         const wallet = await Wallet.findById(walletId);
         if (!wallet) {
             res.status(404).send("Wallet not found");
             return;
+        }
+
+        let transactions: any[];
+        let balance: any;
+
+        switch (wallet.type) {
+            case "bank":
+                transactions = ofx.body.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.BANKTRANLIST.STMTTRN;
+                balance = ofx.body.OFX.BANKMSGSRSV1.STMTTRNRS.STMTRS.LEDGERBAL;
+                break;
+
+            case "creditcard":
+                transactions = ofx.body.OFX.CREDITCARDMSGSRSV1.CCSTMTTRNRS.CCSTMTRS.BANKTRANLIST.STMTTRN;
+                balance = ofx.body.OFX.CREDITCARDMSGSRSV1.CCSTMTTRNRS.CCSTMTRS.LEDGERBAL;
+                break;
+
+            default:
+                break;
         }
 
         const ofxBalanceDate = new Date([balance.DTASOF.substring(0, 4), balance.DTASOF.substring(4, 6), balance.DTASOF.substring(6, 8)].join('-'))
