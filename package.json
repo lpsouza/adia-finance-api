@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "start": "node ./server.js",
-        "build": "tsc --build --verbose",
+        "build": "tsc --build",
         "clean": "rm -Rf dist/",
         "test": "NODE_ENV=test jest --detectOpenHandles --forceExit",
         "dev": "npm run build && node -r dotenv/config ./dist/server.js"
