@@ -11,6 +11,7 @@ import { Authorization } from './middleware/Authorization';
 import routerIndex from './routes/index';
 import routerOfx from './routes/ofx';
 import routerWallets from './routes/wallets';
+import routerEntries from './routes/entries';
 
 const db = DB.getInstance();
 const app: express.Application = express();
@@ -26,6 +27,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/', routerIndex);
 app.use('/ofx', Authentication, Authorization, routerOfx);
 app.use('/wallets', Authentication, Authorization, routerWallets);
+app.use('/entries', Authentication, Authorization, routerEntries);
 
 const options = {
     info: {
