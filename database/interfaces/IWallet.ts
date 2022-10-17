@@ -1,4 +1,4 @@
-import { ITransaction } from "./ITransaction"
+import { IEntry } from "./IEntry"
 
 export interface IWallet {
     name: string,
@@ -7,15 +7,6 @@ export interface IWallet {
      */
     type: string,
     user: string,
-    /**
-     * OFX Field: BALAMT
-     */
-    balance: number,
-    /**
-     * OFX field: DTASOF
-     */
-    balanceDate: Date,
     bankId: number,
-    transactions?: ITransaction[],
     enabled: boolean
 }

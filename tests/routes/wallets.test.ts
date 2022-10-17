@@ -49,6 +49,20 @@ describe('GET /wallets/:id', () => {
     });
 });
 
+describe('GET /wallets/:id/entries', () => {
+    it('should return a list of entries of the wallet', async () => {
+        const res = await request(app).get(`/wallets/${id}/entries`);
+        expect(res.status).toBe(200);
+    });
+});
+
+describe('GET /wallets/:id/transactions', () => {
+    it('should return a list of transactions of the wallet', async () => {
+        const res = await request(app).get(`/wallets/${id}/transactions`);
+        expect(res.status).toBe(200);
+    });
+});
+
 describe('PUT /wallets/:id', () => {
     it('should return a updated wallet', async () => {
         walletTest.name = 'Test Wallet Updated';

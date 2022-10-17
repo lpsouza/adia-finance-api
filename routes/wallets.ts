@@ -1,4 +1,6 @@
 import * as express from 'express';
+import { Entry } from '../database/models/Entry';
+import { Transaction } from '../database/models/Transaction';
 const router = express.Router();
 
 import { Wallet } from '../database/models/Wallet';
@@ -37,6 +39,40 @@ router.get('/:id', async (req: express.Request, res: express.Response) => {
 });
 
 /**
+ * GET /wallets/{id}/entries
+ * @summary Get the entries for a wallet
+ * @tags wallet
+ * @param {string} id.path
+ * @return {array<Entry>} 200 - success response - application/json
+ * @return {string} 404 - error response - string
+ */
+router.get('/:id/entries/', async (req: express.Request, res: express.Response) => {
+    try {
+        const entries = await Entry.find({ walletId: req.params.id });
+        res.status(200).json(entries);
+    } catch (error) {
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+/**
+ * GET /wallets/{id}/transactions
+ * @summary Get the transactions for a wallet
+ * @tags wallet
+ * @param {string} id.path
+ * @return {array<Transaction>} 200 - success response - application/json
+ * @return {string} 404 - error response - string
+ */
+router.get('/:id/transactions/', async (req: express.Request, res: express.Response) => {
+    try {
+        const transactions = await Transaction.find({ walletId: req.params.id });
+        res.status(200).json(transactions);
+    } catch (error) {
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+/**
  * POST /wallets
  * @summary Create a new wallet
  * @tags wallet
@@ -46,8 +82,6 @@ router.get('/:id', async (req: express.Request, res: express.Response) => {
  */
 router.post('/', async (req: express.Request, res: express.Response) => {
     const wallet = new Wallet(req.body);
-    wallet.balance = !wallet.balance ? 0 : wallet.balance;
-    wallet.balanceDate = !wallet.balanceDate ? new Date('1900-01-01') : wallet.balanceDate;
     const created = await wallet.save();
     if (created) {
         res.status(201).json(created);
@@ -71,8 +105,6 @@ router.put('/:id', async (req: express.Request, res: express.Response) => {
         wallet.name = !req.body.name ? wallet.name : req.body.name;
         wallet.type = !req.body.type ? wallet.type : req.body.type;
         wallet.user = !req.body.user ? wallet.user : req.body.user;
-        wallet.balance = !req.body.balance ? wallet.balance : req.body.balance;
-        wallet.balanceDate = !req.body.dateBalance ? wallet.balanceDate : req.body.dateBalance;
         wallet.bankId = !req.body.bankId ? wallet.bankId : req.body.bankId;
         wallet.enabled = !req.body.enabled ? wallet.enabled : req.body.enabled;
         const updated = await wallet.save();

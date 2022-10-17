@@ -18,6 +18,7 @@ export interface ITransaction {
     /**
      * OFX field: MEMO
      */
+    walletId: string,
     description: string,
     customDescription?: string
     tags?: string[]
