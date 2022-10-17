@@ -3,10 +3,9 @@ import morgan from 'morgan';
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
 import expressJSDocSwagger from 'express-jsdoc-swagger';
-import { DB } from './database/DB';
 
-import { Authentication } from './middleware/Authentication';
-import { Authorization } from './middleware/Authorization';
+import { DB } from './database/DB';
+import { Auth } from './middleware/Auth';
 
 import routerIndex from './routes/index';
 import routerOfx from './routes/ofx';
@@ -26,10 +25,10 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use('/', routerIndex);
-app.use('/ofx', Authentication, Authorization, routerOfx);
-app.use('/wallets', Authentication, Authorization, routerWallets);
-app.use('/entries', Authentication, Authorization, routerEntries);
-app.use('/transactions', Authentication, Authorization, routerTransactions);
+app.use('/ofx', Auth, routerOfx);
+app.use('/wallets', Auth, routerWallets);
+app.use('/entries', Auth, routerEntries);
+app.use('/transactions', Auth, routerTransactions);
 
 const options = {
     info: {

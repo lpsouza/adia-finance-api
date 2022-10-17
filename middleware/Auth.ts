@@ -1,7 +1,7 @@
 import * as express from 'express';
 import CoreService from '../services/CoreService';
 
-export const Authentication = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+export const Auth = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (['development', 'test'].includes(process.env.NODE_ENV)) {
         next()
         return;
@@ -36,6 +36,10 @@ export const Authentication = async (req: express.Request, res: express.Response
         const tokenInfo = await CoreService.auth.token(token);
         const user = await CoreService.users.get(tokenInfo.data.email);
         res.locals.user = user.data;
+        if (user.data.role !== 'owner') {
+            res.status(401).send("Unauthorized");
+            return;
+        }
     } catch (error) {
         res.status(401).send("Unauthorized");
         return;
