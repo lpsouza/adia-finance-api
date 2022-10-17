@@ -1,9 +1,9 @@
 import * as express from 'express';
-import { Entry } from '../database/models/Entry';
-import { Transaction } from '../database/models/Transaction';
 const router = express.Router();
 
 import { Wallet } from '../database/models/Wallet';
+import { Entry } from '../database/models/Entry';
+import { Transaction } from '../database/models/Transaction';
 
 /**
  * GET /wallets

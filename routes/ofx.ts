@@ -1,10 +1,13 @@
 import * as express from 'express';
+const router = express.Router();
+
 import * as banking from 'banking';
+
 import { UploadedFile } from 'express-fileupload';
 import { Wallet } from '../database/models/Wallet';
 import { Entry } from '../database/models/Entry';
 import { Transaction } from '../database/models/Transaction';
-const router = express.Router();
+
 
 router.post('/importer', (req: express.Request, res: express.Response, next: Function): void => {
     const ofxFile = req.files.ofxFile as UploadedFile;
