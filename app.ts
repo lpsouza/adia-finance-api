@@ -12,6 +12,7 @@ import routerIndex from './routes/index';
 import routerOfx from './routes/ofx';
 import routerWallets from './routes/wallets';
 import routerEntries from './routes/entries';
+import routerTransactions from './routes/transactions';
 
 const db = DB.getInstance();
 const app: express.Application = express();
@@ -28,6 +29,7 @@ app.use('/', routerIndex);
 app.use('/ofx', Authentication, Authorization, routerOfx);
 app.use('/wallets', Authentication, Authorization, routerWallets);
 app.use('/entries', Authentication, Authorization, routerEntries);
+app.use('/transactions', Authentication, Authorization, routerTransactions);
 
 const options = {
     info: {
