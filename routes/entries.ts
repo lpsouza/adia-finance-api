@@ -6,7 +6,7 @@ import { Entry } from '../database/models/Entry';
 /**
  * GET /entries
  * @summary Get all entries
- * @tags entry
+ * @tags Entries
  * @return {array<Entry>} 200 - success response - application/json
  */
 router.get('/', async (req: express.Request, res: express.Response, next: Function) => {
@@ -21,7 +21,7 @@ router.get('/', async (req: express.Request, res: express.Response, next: Functi
 /**
  * GET /entries/{id}
  * @summary Get a entry
- * @tags entry
+ * @tags Entries
  * @param {string} id.path
  * @return {Entry} 200 - success response - application/json
  * @return {string} 404 - error response - string
@@ -39,7 +39,7 @@ router.get('/:id', async (req: express.Request, res: express.Response) => {
 /**
  * POST /entries
  * @summary Create a new entry
- * @tags entry
+ * @tags Entries
  * @param {Entry} request.body.required - Entry object - application/json
  * @return {Entry} 200 - success response - application/json
  * @return {string} 404 - error response - string
@@ -57,7 +57,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
 /**
  * PUT /entries/{id}
  * @summary Edit a entry
- * @tags entry
+ * @tags Entries
  * @param {string} id.path
  * @param {Entry} request.body.required - Entry object - application/json
  * @return {Entry} 200 - success response - application/json
@@ -79,7 +79,7 @@ router.put('/:id', async (req: express.Request, res: express.Response) => {
 /**
  * DELETE /entries/{id}
  * @summary Get a entry
- * @tags entry
+ * @tags Entries
  * @param {string} id.path
  * @return {Entry} 200 - success response - application/json
  * @return {string} 404 - error response - string

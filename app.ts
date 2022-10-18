@@ -33,7 +33,7 @@ app.use('/transactions', Auth, routerTransactions);
 const options = {
     info: {
         version: '1.0.0',
-        title: 'Test',
+        title: 'A.D.I.A. Finance API',
     },
     baseDir: __dirname,
     // Glob pattern to find your jsdoc files (multiple patterns can be added in an array)

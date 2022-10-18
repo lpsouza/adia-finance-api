@@ -8,7 +8,7 @@ import { Transaction } from '../database/models/Transaction';
 /**
  * GET /wallets
  * @summary Get all wallets
- * @tags wallet
+ * @tags Wallets
  * @return {array<Wallet>} 200 - success response - application/json
  */
 router.get('/', async (req: express.Request, res: express.Response, next: Function) => {
@@ -23,7 +23,7 @@ router.get('/', async (req: express.Request, res: express.Response, next: Functi
 /**
  * GET /wallets/{id}
  * @summary Get a wallet
- * @tags wallet
+ * @tags Wallets
  * @param {string} id.path
  * @return {Wallet} 200 - success response - application/json
  * @return {string} 404 - error response - string
@@ -41,10 +41,10 @@ router.get('/:id', async (req: express.Request, res: express.Response) => {
 /**
  * GET /wallets/{id}/entries
  * @summary Get the entries for a wallet
- * @tags wallet
+ * @tags Wallets
  * @param {string} id.path
  * @return {array<Entry>} 200 - success response - application/json
- * @return {string} 404 - error response - string
+ * @return {string} 500 - error response - string
  */
 router.get('/:id/entries/', async (req: express.Request, res: express.Response) => {
     try {
@@ -58,10 +58,10 @@ router.get('/:id/entries/', async (req: express.Request, res: express.Response) 
 /**
  * GET /wallets/{id}/transactions
  * @summary Get the transactions for a wallet
- * @tags wallet
+ * @tags Wallets
  * @param {string} id.path
  * @return {array<Transaction>} 200 - success response - application/json
- * @return {string} 404 - error response - string
+ * @return {string} 500 - error response - string
  */
 router.get('/:id/transactions/', async (req: express.Request, res: express.Response) => {
     try {
@@ -75,7 +75,7 @@ router.get('/:id/transactions/', async (req: express.Request, res: express.Respo
 /**
  * POST /wallets
  * @summary Create a new wallet
- * @tags wallet
+ * @tags Wallets
  * @param {Wallet} request.body.required - Wallet object - application/json
  * @return {Wallet} 200 - success response - application/json
  * @return {string} 404 - error response - string
@@ -93,7 +93,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
 /**
  * PUT /wallets/{id}
  * @summary Edit a wallet
- * @tags wallet
+ * @tags Wallets
  * @param {string} id.path
  * @param {Wallet} request.body.required - Wallet object - application/json
  * @return {Wallet} 200 - success response - application/json
@@ -121,7 +121,7 @@ router.put('/:id', async (req: express.Request, res: express.Response) => {
 /**
  * DELETE /wallets/{id}
  * @summary Get a wallet
- * @tags wallet
+ * @tags Wallets
  * @param {string} id.path
  * @return {Wallet} 200 - success response - application/json
  * @return {string} 404 - error response - string

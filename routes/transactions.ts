@@ -6,7 +6,7 @@ import { Transaction } from '../database/models/Transaction';
 /**
  * GET /transactions
  * @summary Get all transactions
- * @tags transaction
+ * @tags Transactions
  * @return {array<Transaction>} 200 - success response - application/json
  */
 router.get('/', async (req: express.Request, res: express.Response, next: Function) => {
@@ -21,7 +21,7 @@ router.get('/', async (req: express.Request, res: express.Response, next: Functi
 /**
  * GET /transactions/{id}
  * @summary Get a transaction
- * @tags transaction
+ * @tags Transactions
  * @param {string} id.path
  * @return {Transaction} 200 - success response - application/json
  * @return {string} 404 - error response - string
@@ -39,7 +39,7 @@ router.get('/:id', async (req: express.Request, res: express.Response) => {
 /**
  * POST /transactions
  * @summary Create a new transaction
- * @tags transaction
+ * @tags Transactions
  * @param {Transaction} request.body.required - Transaction object - application/json
  * @return {Transaction} 200 - success response - application/json
  * @return {string} 404 - error response - string
@@ -57,7 +57,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
 /**
  * PUT /transactions/{id}
  * @summary Edit a transaction
- * @tags transaction
+ * @tags Transactions
  * @param {string} id.path
  * @param {Transaction} request.body.required - Transaction object - application/json
  * @return {Transaction} 200 - success response - application/json
@@ -84,7 +84,7 @@ router.put('/:id', async (req: express.Request, res: express.Response) => {
 /**
  * DELETE /transactions/{id}
  * @summary Get a transaction
- * @tags transaction
+ * @tags Transactions
  * @param {string} id.path
  * @return {Transaction} 200 - success response - application/json
  * @return {string} 404 - error response - string
