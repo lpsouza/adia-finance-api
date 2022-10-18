@@ -8,6 +8,7 @@ import { Transaction } from '../database/models/Transaction';
  * @summary Get all transactions
  * @tags Transactions
  * @return {array<Transaction>} 200 - success response - application/json
+ * @security BearerAuth
  */
 router.get('/', async (req: express.Request, res: express.Response, next: Function) => {
     try {
@@ -25,6 +26,7 @@ router.get('/', async (req: express.Request, res: express.Response, next: Functi
  * @param {string} id.path
  * @return {Transaction} 200 - success response - application/json
  * @return {string} 404 - error response - string
+ * @security BearerAuth
  */
 router.get('/:id', async (req: express.Request, res: express.Response) => {
     try {
@@ -43,6 +45,7 @@ router.get('/:id', async (req: express.Request, res: express.Response) => {
  * @param {Transaction} request.body.required - Transaction object - application/json
  * @return {Transaction} 200 - success response - application/json
  * @return {string} 404 - error response - string
+ * @security BearerAuth
  */
 router.post('/', async (req: express.Request, res: express.Response) => {
     try {
@@ -62,6 +65,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
  * @param {Transaction} request.body.required - Transaction object - application/json
  * @return {Transaction} 200 - success response - application/json
  * @return {string} 404 - error response - string
+ * @security BearerAuth
  */
 router.put('/:id', async (req: express.Request, res: express.Response) => {
     try {
@@ -88,6 +92,7 @@ router.put('/:id', async (req: express.Request, res: express.Response) => {
  * @param {string} id.path
  * @return {Transaction} 200 - success response - application/json
  * @return {string} 404 - error response - string
+ * @security BearerAuth
  */
 router.delete('/:id', async (req: express.Request, res: express.Response) => {
     try {

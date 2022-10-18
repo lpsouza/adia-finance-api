@@ -3,12 +3,18 @@
         "version": "1.0.0",
         "title": "A.D.I.A. Finance API"
     },
-    "baseDir": "__dirname",
-    "filesPattern": "./**/*.js",
+    "baseDir": "./",
+    "filesPattern": [
+        "./**/*.js"
+    ],
+    "security": {
+        "BearerAuth": {
+            "type": "http",
+            "scheme": "bearer"
+        }
+    },
     "swaggerUIPath": "/docs",
     "exposeSwaggerUI": true,
-    "exposeApiDocs": false,
-    "apiDocsPath": "/api-docs",
     "notRequiredAsNullable": false,
     "swaggerUiOptions": {},
     "multiple": true

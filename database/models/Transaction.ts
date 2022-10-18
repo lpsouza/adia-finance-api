@@ -10,6 +10,7 @@ import { TransactionSchema } from "../schemas/TransactionSchema";
  * @property {string} date.required
  * @property {number} amount.required
  * @property {string} transactionId.required
+ * @property {string} walletId.required
  * @property {string} description.required
  * @property {string} customDescription
  * @property {array<string>} tags

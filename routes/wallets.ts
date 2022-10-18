@@ -10,6 +10,7 @@ import { Transaction } from '../database/models/Transaction';
  * @summary Get all wallets
  * @tags Wallets
  * @return {array<Wallet>} 200 - success response - application/json
+ * @security BearerAuth
  */
 router.get('/', async (req: express.Request, res: express.Response, next: Function) => {
     try {
@@ -27,6 +28,7 @@ router.get('/', async (req: express.Request, res: express.Response, next: Functi
  * @param {string} id.path
  * @return {Wallet} 200 - success response - application/json
  * @return {string} 404 - error response - string
+ * @security BearerAuth
  */
 router.get('/:id', async (req: express.Request, res: express.Response) => {
     try {
@@ -45,6 +47,7 @@ router.get('/:id', async (req: express.Request, res: express.Response) => {
  * @param {string} id.path
  * @return {array<Entry>} 200 - success response - application/json
  * @return {string} 500 - error response - string
+ * @security BearerAuth
  */
 router.get('/:id/entries/', async (req: express.Request, res: express.Response) => {
     try {
@@ -62,6 +65,7 @@ router.get('/:id/entries/', async (req: express.Request, res: express.Response) 
  * @param {string} id.path
  * @return {array<Transaction>} 200 - success response - application/json
  * @return {string} 500 - error response - string
+ * @security BearerAuth
  */
 router.get('/:id/transactions/', async (req: express.Request, res: express.Response) => {
     try {
@@ -79,6 +83,7 @@ router.get('/:id/transactions/', async (req: express.Request, res: express.Respo
  * @param {Wallet} request.body.required - Wallet object - application/json
  * @return {Wallet} 200 - success response - application/json
  * @return {string} 404 - error response - string
+ * @security BearerAuth
  */
 router.post('/', async (req: express.Request, res: express.Response) => {
     const wallet = new Wallet(req.body);
@@ -98,6 +103,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
  * @param {Wallet} request.body.required - Wallet object - application/json
  * @return {Wallet} 200 - success response - application/json
  * @return {string} 404 - error response - string
+ * @security BearerAuth
  */
 router.put('/:id', async (req: express.Request, res: express.Response) => {
     try {
@@ -125,6 +131,7 @@ router.put('/:id', async (req: express.Request, res: express.Response) => {
  * @param {string} id.path
  * @return {Wallet} 200 - success response - application/json
  * @return {string} 404 - error response - string
+ * @security BearerAuth
  */
 router.delete('/:id', async (req: express.Request, res: express.Response) => {
     try {
