@@ -49,7 +49,7 @@ router.post('/importer', (req: express.Request, res: express.Response, next: Fun
             let entry = await Entry.findOne({
                 balanceDate: {
                     $gte: new Date(balanceDate.getFullYear(), balanceDate.getMonth(), 1),
-                    $lt: new Date(balanceDate.getFullYear(), balanceDate.getMonth(), 31)
+                    $lt: new Date(balanceDate.getFullYear(), balanceDate.getMonth() + 1, 0)
                 }
             });
             if (entry) {
