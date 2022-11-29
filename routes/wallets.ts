@@ -136,6 +136,8 @@ router.put('/:id', async (req: express.Request, res: express.Response) => {
 router.delete('/:id', async (req: express.Request, res: express.Response) => {
     try {
         await Wallet.findOneAndDelete({ _id: req.params.id });
+        await Entry.findOneAndDelete({ walletId: req.params.id });
+        await Transaction.findOneAndDelete({ walletId: req.params.id });
         res.status(200).send('Wallet deleted');
     } catch (error) {
         res.status(404).send('No wallet found');
