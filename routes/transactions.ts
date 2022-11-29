@@ -12,7 +12,17 @@ import { Transaction } from '../database/models/Transaction';
  */
 router.get('/', async (req: express.Request, res: express.Response, next: Function) => {
     try {
-        const transactions = await Transaction.find();
+        const startDate = req.query.start_date as string;
+        const endDate = req.query.end_date as string;
+
+        const query = startDate && endDate ? {
+            date: {
+                $gte: new Date(startDate),
+                $lt: new Date(endDate)
+            }
+        } : {};
+
+        const transactions = await Transaction.find(query);
         res.status(200).json(transactions);
     } catch (error) {
         res.status(500).send('Internal Server Error');
