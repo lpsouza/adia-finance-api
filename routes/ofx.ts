@@ -41,7 +41,8 @@ router.post('/importer', (req: express.Request, res: express.Response, next: Fun
                     break;
 
                 default:
-                    break;
+                    res.status(400).send("Only bank or creditcard wallet is permited.");
+                    return;
             }
 
             const balanceDate = new Date([balance.DTASOF.substring(0, 4), balance.DTASOF.substring(4, 6), balance.DTASOF.substring(6, 8)].join('-'))
