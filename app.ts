@@ -20,7 +20,9 @@ const app: express.Application = express();
 
 db.start();
 app.use(express.json());
-app.use(morgan('combined'));
+if (process.env.NODE_ENV !== 'test') {
+    app.use(morgan('combined'));
+}
 app.use(fileUpload({ createParentPath: true }));
 if (process.env.NODE_ENV === 'development') {
     app.use(cors());
