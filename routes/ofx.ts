@@ -47,12 +47,12 @@ router.post('/importer', (req: express.Request, res: express.Response, next: Fun
 
             const balanceDate = new Date([balance.DTASOF.substring(0, 4), balance.DTASOF.substring(4, 6), balance.DTASOF.substring(6, 8)].join('-'))
 
-            let entry = await Entry.findOne({
-                balanceDate: {
-                    $gte: new Date(balanceDate.getFullYear(), balanceDate.getMonth(), 1),
-                    $lt: new Date(balanceDate.getFullYear(), balanceDate.getMonth() + 1, 0)
-                }
-            });
+            const monthyRange = {
+                $gte: new Date(balanceDate.getFullYear(), balanceDate.getMonth(), 1),
+                $lt: new Date(balanceDate.getFullYear(), balanceDate.getMonth() + 1, 0)
+            }
+
+            let entry = await Entry.findOne({ balanceDate: monthyRange });
             if (entry) {
                 entry.balance = balance.BALAMT;
                 entry.balanceDate = balanceDate;
@@ -67,7 +67,7 @@ router.post('/importer', (req: express.Request, res: express.Response, next: Fun
                 await entry.save();
             }
 
-            await Transaction.deleteMany({ walletId });
+            await Transaction.deleteMany({ walletId, date: monthyRange });
             transactions.forEach(async t => {
                 const transaction = new Transaction({
                     type: t.TRNTYPE,
