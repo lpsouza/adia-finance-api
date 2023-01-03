@@ -1,9 +1,7 @@
 import request from 'supertest';
 import app from '../../app';
-import appCore from '../core/../../app';
 
 const walletTest = {
-    name: "Test Wallet",
     type: "bank",
     user: "user@email.com",
     bankId: 1,
@@ -13,14 +11,14 @@ const walletTest = {
 let id: string;
 
 describe('POST /wallets', () => {
-    it('should return a created app', async () => {
+    it('should return a created wallet', async () => {
         const res = await request(app).post('/wallets').send(walletTest);
         expect(res.status).toBe(201);
-        expect(res.body.name).toEqual(walletTest.name);
         expect(res.body.type).toEqual(walletTest.type);
         expect(res.body.user).toEqual(walletTest.user);
         expect(res.body.bankId).toEqual(walletTest.bankId);
-        expect(res.body.enabled).toEqual(walletTest.enabled);
+        expect(res.body.bankName).not.toBeNull();
+        expect(res.body.enabled).toEqual(true);
         id = res.body._id;
     });
 });
@@ -37,11 +35,11 @@ describe('GET /wallets/:id', () => {
     it('should return a wallet', async () => {
         const res = await request(app).get(`/wallets/${id}`);
         expect(res.status).toBe(200);
-        expect(res.body.name).toEqual(walletTest.name);
         expect(res.body.type).toEqual(walletTest.type);
         expect(res.body.user).toEqual(walletTest.user);
         expect(res.body.bankId).toEqual(walletTest.bankId);
-        expect(res.body.enabled).toEqual(walletTest.enabled);
+        expect(res.body.bankName).not.toBeNull();
+        expect(res.body.enabled).toEqual(true);
     });
     it('should return wallet not found', async () => {
         const res = await request(app).get(`/wallets/aaa`);
@@ -65,15 +63,14 @@ describe('GET /wallets/:id/transactions', () => {
 
 describe('PUT /wallets/:id', () => {
     it('should return a updated wallet', async () => {
-        walletTest.name = 'Test Wallet Updated';
-        walletTest.user = 'other@login.com';
+        walletTest.enabled = false;
         const res = await request(app).put(`/wallets/${id}`).send(walletTest);
         expect(res.status).toBe(200);
-        expect(res.body.name).toEqual(walletTest.name);
         expect(res.body.type).toEqual(walletTest.type);
         expect(res.body.user).toEqual(walletTest.user);
         expect(res.body.bankId).toEqual(walletTest.bankId);
-        expect(res.body.enabled).toEqual(walletTest.enabled);
+        expect(res.body.bankName).not.toBeNull();
+        expect(res.body.enabled).toEqual(false);
     });
 });
 
