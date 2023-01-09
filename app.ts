@@ -1,10 +1,8 @@
 import express from 'express';
 import morgan from 'morgan';
 import fileUpload from 'express-fileupload';
-import cors from 'cors';
 
 import { DB } from './database/DB';
-import { Auth } from './middleware/Auth';
 
 import routerIndex from './routes/index';
 import routerOfx from './routes/ofx';
@@ -24,15 +22,12 @@ if (process.env.NODE_ENV !== 'test') {
     app.use(morgan('combined'));
 }
 app.use(fileUpload({ createParentPath: true }));
-if (process.env.NODE_ENV === 'development') {
-    app.use(cors());
-}
 
 app.use('/', routerIndex);
-app.use('/ofx', Auth, routerOfx);
-app.use('/wallets', Auth, routerWallets);
-app.use('/entries', Auth, routerEntries);
-app.use('/transactions', Auth, routerTransactions);
+app.use('/ofx', routerOfx);
+app.use('/wallets', routerWallets);
+app.use('/entries', routerEntries);
+app.use('/transactions', routerTransactions);
 
 expressJSDocSwagger(app)(swaggerOptions);
 
