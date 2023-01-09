@@ -10,6 +10,10 @@ const walletTest = {
 
 let id: string;
 
+beforeAll(async () => {
+    await request(app).head('/wallets');
+});
+
 describe('POST /wallets', () => {
     it('should return a created wallet', async () => {
         const res = await request(app).post('/wallets').send(walletTest);

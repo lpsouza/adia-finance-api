@@ -25,7 +25,7 @@ router.get('/', async (req: express.Request, res: express.Response, next: Functi
         const transactions = await Transaction.find(query);
         res.status(200).json(transactions);
     } catch (error) {
-        res.status(500).send('Internal Server Error');
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 });
 
@@ -43,7 +43,7 @@ router.get('/:id', async (req: express.Request, res: express.Response) => {
         const transaction = await Transaction.findOne({ _id: req.params.id });
         res.status(200).json(transaction);
     } catch (error) {
-        res.status(404).send('No transaction found');
+        res.status(404).json({ message: 'No transaction found' });
 
     }
 });
@@ -63,7 +63,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
         const created = await transaction.save();
         res.status(201).json(created);
     } catch (error) {
-        res.status(404).send('No transaction created');
+        res.status(404).json({ message: 'No transaction found' });
     }
 });
 
@@ -91,7 +91,7 @@ router.put('/:id', async (req: express.Request, res: express.Response) => {
         await Transaction.findByIdAndUpdate({ _id: transaction._id }, transaction);
         res.status(200).json(transaction);
     } catch (error) {
-        res.status(404).send('No transaction found');
+        res.status(404).json({ message: 'No transaction found' });
     }
 });
 
@@ -107,9 +107,9 @@ router.put('/:id', async (req: express.Request, res: express.Response) => {
 router.delete('/:id', async (req: express.Request, res: express.Response) => {
     try {
         await Transaction.findOneAndDelete({ _id: req.params.id });
-        res.status(200).send('Transaction deleted');
+        res.status(200).json({ message: 'Transaction deleted' });
     } catch (error) {
-        res.status(404).send('No transaction found');
+        res.status(404).json({ message: 'No transaction found' });
     }
 });
 

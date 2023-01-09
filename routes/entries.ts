@@ -15,7 +15,7 @@ router.get('/', async (req: express.Request, res: express.Response, next: Functi
         const entries = await Entry.find();
         res.status(200).json(entries);
     } catch (error) {
-        res.status(500).send('Internal Server Error');
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 });
 
@@ -33,7 +33,7 @@ router.get('/:id', async (req: express.Request, res: express.Response) => {
         const entry = await Entry.findOne({ _id: req.params.id });
         res.status(200).json(entry);
     } catch (error) {
-        res.status(404).send('No entry found');
+        res.status(404).json({ message: 'No entry found' });
 
     }
 });
@@ -53,7 +53,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
         const created = await entry.save();
         res.status(201).json(created);
     } catch (error) {
-        res.status(404).send('No entry created');
+        res.status(400).json({ message: 'Bad Request' });
     }
 });
 
@@ -76,7 +76,7 @@ router.put('/:id', async (req: express.Request, res: express.Response) => {
         await Entry.findByIdAndUpdate({ _id: entry._id }, entry);
         res.status(200).json(entry);
     } catch (error) {
-        res.status(404).send('No entry found');
+        res.status(404).json({ message: 'No entry found' });
     }
 });
 
@@ -92,9 +92,9 @@ router.put('/:id', async (req: express.Request, res: express.Response) => {
 router.delete('/:id', async (req: express.Request, res: express.Response) => {
     try {
         await Entry.findOneAndDelete({ _id: req.params.id });
-        res.status(200).send('Entry deleted');
+        res.status(200).json({ message: 'Entry deleted' });
     } catch (error) {
-        res.status(404).send('No entry found');
+        res.status(404).json({ message: 'No entry found' });
     }
 });
 

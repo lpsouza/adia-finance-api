@@ -9,8 +9,12 @@ const entryTest = {
 
 let id: string;
 
+beforeAll(async () => {
+    await request(app).head('/wallets');
+});
+
 describe('POST /entries', () => {
-    it('should return a created app', async () => {
+    it('should return a created entry', async () => {
         const res = await request(app).post('/entries').send(entryTest);
         expect(res.status).toBe(201);
         expect(res.body.balance).toEqual(entryTest.balance);

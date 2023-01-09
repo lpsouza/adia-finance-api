@@ -12,8 +12,12 @@ const transactionTest = {
 
 let id: string;
 
+beforeAll(async () => {
+    await request(app).head('/wallets');
+});
+
 describe('POST /transactions', () => {
-    it('should return a created app', async () => {
+    it('should return a created transaction', async () => {
         const res = await request(app).post('/transactions').send(transactionTest);
         expect(res.status).toBe(201);
         expect(res.body.type).toEqual(transactionTest.type);
