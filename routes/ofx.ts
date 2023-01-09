@@ -11,8 +11,7 @@ import { Transaction } from '../database/models/Transaction';
 
 router.post('/importer', (req: express.Request, res: express.Response, next: Function): void => {
     try {
-    const ofxFile = req.files.ofxFile as UploadedFile;
-    const walletId = req.body.walletId;
+        console.log(req.files);
         const ofxFile = req.files.ofxFile as UploadedFile;
         const walletId = req.body.walletId;
 
@@ -88,23 +87,7 @@ router.post('/importer', (req: express.Request, res: express.Response, next: Fun
             }
         });
     } catch (error) {
-            await Transaction.deleteMany({ walletId, date: monthyRange });
-            transactions.forEach(async t => {
-                const transaction = new Transaction({
-                    type: t.TRNTYPE,
-                    date: new Date([t.DTPOSTED.substring(0, 4), t.DTPOSTED.substring(4, 6), t.DTPOSTED.substring(6, 8)].join('-')),
-                    amount: t.TRNAMT,
-                    transactionId: t.FITID,
-                    description: t.MEMO,
-                    walletId
-                });
-                await transaction.save();
-            });
-            res.status(200).send("Import success");
-        } catch (error) {
-            res.status(500).send("Error importing");
-        }
-    });
+        console.log(error.message);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
